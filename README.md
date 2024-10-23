@@ -1,5 +1,18 @@
 # Infrastructure as Code (IaC)
 
+- [Infrastructure as Code (IaC)](#infrastructure-as-code-iac)
+- [What is IaC?](#what-is-iac)
+  - [Benefits of IaC](#benefits-of-iac)
+    - [Detailed Benefits of IaC](#detailed-benefits-of-iac)
+    - [Key Benefits of IaC and CI/CD for Customers](#key-benefits-of-iac-and-cicd-for-customers)
+  - [When/Where to Use IaC](#whenwhere-to-use-iac)
+  - [What are the Tools Available for IaC?](#what-are-the-tools-available-for-iac)
+- [What is Configuration Management (CM)?](#what-is-configuration-management-cm)
+- [What is Provisioning of Infrastructure? Do CM Tools Do It?](#what-is-provisioning-of-infrastructure-do-cm-tools-do-it)
+- [What is Ansible and How Does It Work?](#what-is-ansible-and-how-does-it-work)
+- [Who is Using IaC and Ansible in the Industry?](#who-is-using-iac-and-ansible-in-the-industry)
+
+
 ![iac1](./iac-images/iac1.png)
 Source: https://www.linkedin.com/pulse/enabling-infrastructure-code-iac-cicd-key-benefits-customers-bilal/
 
