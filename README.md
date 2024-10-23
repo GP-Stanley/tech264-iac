@@ -19,6 +19,9 @@
 - [What is Configuration Management (CM)?](#what-is-configuration-management-cm)
 - [What is Provisioning of Infrastructure? Do CM Tools Do It?](#what-is-provisioning-of-infrastructure-do-cm-tools-do-it)
 - [What is Ansible and How Does It Work?](#what-is-ansible-and-how-does-it-work)
+  - [How Does Ansible Work?](#how-does-ansible-work)
+  - [Key Features of Ansible:](#key-features-of-ansible)
+    - [Example Use Cases:](#example-use-cases)
 - [Who is Using IaC and Ansible in the Industry?](#who-is-using-iac-and-ansible-in-the-industry)
 
 
@@ -99,6 +102,14 @@ Example Use Cases:
 * **Google Cloud Deployment Manager**: For Google Cloud Platform.
 * **Ansible**, **Chef**, **Puppet**: These tools also handle configuration management.
 
+<br>
+
+![10-iac-tools](./iac-images/iac-tools.png)
+
+Source: https://cloudwithease.com/top-10-infrastructure-as-a-code-or-iac-tools/
+
+<br>
+
 ### Configuration management tools
 * Helps **automate** the **management and tracking** of IT **infrastructure**, ensuring consistency and reliability across different environments.
   * Ansible.
@@ -159,14 +170,7 @@ Example Use Cases:
 | **Type**               | **Description**                                                                 | **Examples**                                                                                     |
 |------------------------|---------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
 | **Declarative IaC Tools** | These tools specify the desired end state of the infrastructure, and the tool automatically configures it to match that state. | Terraform, AWS CloudFormation, Azure Resource Manager, Google Cloud Deployment Manager |
-| **Imperative IaC Tools**  | These tools specify the exact steps needed to achieve the desired configuration. | Ansible, Chef, Puppet, SaltStack                                                                 |
-
-
-<br>
-
-![10-iac-tools](./iac-images/iac-tools.png)
-
-Source: https://cloudwithease.com/top-10-infrastructure-as-a-code-or-iac-tools/
+| **Imperative IaC Tools**  | These tools specify the exact steps needed to achieve the desired configuration. | Ansible, Chef, Puppet, SaltStack                                                
 
 <br>
 
@@ -187,6 +191,37 @@ Source: https://cloudwithease.com/top-10-infrastructure-as-a-code-or-iac-tools/
 * Ansible is an **open-source tool** used for **IT automation**, including **configuration management**, **application deployment**, and **task automation**. 
 * It works by **connecting to your nodes** (servers, devices, etc.) and **pushing out small programs** called “Ansible modules” **to perform tasks**. 
   * These modules are executed over SSH, and the results are returned to the Ansible server.
+
+<br>
+
+## How Does Ansible Work?
+1. **Connecting to Nodes**
+   * Ansible connects to your nodes (which can be servers, devices, or any other infrastructure components) using SSH (Secure Shell). 
+   * This means you don’t need to install any special software on the nodes themselves.
+2. **Pushing Ansible Modules**
+   * Ansible uses small programs called “modules” to perform tasks. 
+   * These modules are pushed out to the nodes from the Ansible server (also known as the control node).
+3. **Executing Modules**
+   * The modules are executed on the nodes over SSH. This means Ansible can run commands and scripts on the nodes to perform the required tasks.
+4. **Returning Results**
+   * After executing the modules, the results are sent back to the Ansible server. 
+   * This allows you to see what changes were made and if there were any issues.
+
+<br>
+
+## Key Features of Ansible:
+* **Agentless**: Unlike some other tools, Ansible doesn’t require any agents to be installed on the nodes. 
+  * It uses SSH for communication, which simplifies the setup and reduces overhead.
+* **Declarative Language**: Ansible uses a simple, human-readable language called YAML (Yet Another Markup Language) to define automation tasks. 
+  * This makes it easy to write and understand the automation scripts.
+* **Idempotent**: Ansible ensures that running the same task multiple times will produce the same result. 
+  * This means you can safely re-run your automation scripts without worrying about unintended changes.
+
+### Example Use Cases:
+* **Provisioning**: Setting up new servers and configuring them with the necessary software and settings.
+* **Configuration Management**: Ensuring that all servers have the same configuration and are up-to-date.
+* **Application Deployment**: Automating the deployment of applications to different environments (development, testing, production).
+* **Orchestration**: Coordinating complex workflows and processes across multiple systems.
 
 <br>
 
