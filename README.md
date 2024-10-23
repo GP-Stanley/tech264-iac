@@ -68,10 +68,18 @@ Source: https://scand.com/company/blog/infrastructure-as-code/
 ## When/Where to Use IaC
 IaC is useful whenever you need to **manage infrastructure**, especially in environments that require frequent updates or scaling. 
 
-It’s commonly used in:
+Where to use IaC:
+* **Time Saver**: You need to think about 'how much time is this going to save me?'. Is it worth investing the time? 
+  * Creating Images.
+  * CLI Commands that you can run manually. You could put these commands into a script that runs the commands for you. 
 * **Cloud environments**: Automating the setup of cloud resources.
 * **Development and testing**: Quickly setting up consistent environments for developers and testers.
 * **Production**: Ensuring reliable and repeatable deployments.
+
+Example Use Cases:
+* **Cloud Infrastructure**: Setting up virtual machines, storage, networking.
+* **CI/CD Pipelines**: Automating the deployment process.
+* **Multi-Region Deployments**: Consistent setup across different locations.
 
 <br>
 
@@ -83,6 +91,7 @@ It’s commonly used in:
 * **Ansible**, **Chef**, **Puppet**: These tools also handle configuration management.
 
 ![10-iac-tools](./iac-images/iac-tools.png)
+
 Source: https://cloudwithease.com/top-10-infrastructure-as-a-code-or-iac-tools/
 
 <br>
