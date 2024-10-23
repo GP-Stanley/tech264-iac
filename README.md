@@ -22,6 +22,15 @@
   - [How Does Ansible Work?](#how-does-ansible-work)
   - [Key Features of Ansible:](#key-features-of-ansible)
     - [Example Use Cases:](#example-use-cases)
+  - [Key Features of Ansible Playbooks](#key-features-of-ansible-playbooks)
+      - [Declarative Syntax](#declarative-syntax)
+      - [Tasks and Plays](#tasks-and-plays)
+      - [Modules](#modules)
+      - [Idempotency](#idempotency)
+  - [How Ansible Playbooks Work](#how-ansible-playbooks-work)
+  - [Ansible Controller (Control Node)](#ansible-controller-control-node)
+    - [Role of the Controller:](#role-of-the-controller)
+    - [Key Functions:](#key-functions)
 - [Who is Using IaC and Ansible in the Industry?](#who-is-using-iac-and-ansible-in-the-industry)
 
 
@@ -191,6 +200,8 @@ Source: https://cloudwithease.com/top-10-infrastructure-as-a-code-or-iac-tools/
 * Ansible is an **open-source tool** used for **IT automation**, including **configuration management**, **application deployment**, and **task automation**. 
 * It works by **connecting to your nodes** (servers, devices, etc.) and **pushing out small programs** called “Ansible modules” **to perform tasks**. 
   * These modules are executed over SSH, and the results are returned to the Ansible server.
+* An Ansible playbook is a file written in YAML (Yet Another Markup Language) that defines a series of tasks to be executed on your managed nodes (servers, devices, etc.). 
+  * Playbooks are used to automate and manage configurations, deployments, and other IT tasks.
 
 <br>
 
@@ -222,6 +233,59 @@ Source: https://cloudwithease.com/top-10-infrastructure-as-a-code-or-iac-tools/
 * **Configuration Management**: Ensuring that all servers have the same configuration and are up-to-date.
 * **Application Deployment**: Automating the deployment of applications to different environments (development, testing, production).
 * **Orchestration**: Coordinating complex workflows and processes across multiple systems.
+
+<br>
+
+## Key Features of Ansible Playbooks
+#### Declarative Syntax
+* Playbooks use a simple, human-readable syntax in YAML, making them easy to write and understand.
+
+#### Tasks and Plays
+* A playbook consists of one or more “plays.” Each play maps a group of hosts to a set of tasks.
+* Tasks are the individual actions that Ansible performs, such as installing a package, starting a service, or copying a file.
+
+#### Modules
+* Tasks in a playbook use Ansible modules, which are small programs that perform specific actions. 
+  * For example, the yum module can install packages on a Red Hat-based system.
+
+#### Idempotency
+* Playbooks are designed to be idempotent, meaning that running the same playbook multiple times will produce the same result without causing unintended changes.
+
+## How Ansible Playbooks Work
+1. **Define the Playbook**
+   * You write a playbook in YAML, specifying the hosts to target and the tasks to perform.
+
+2. **Execute the Playbook**
+   * You run the playbook using the ansible-playbook command. 
+   * Ansible connects to the specified hosts over SSH and executes the tasks in the order they are written.
+
+3. **Modules Execution**
+   * Each task calls an Ansible module, which performs the specified action on the target hosts. The results are then returned to the Ansible server.
+
+<br>
+
+## Ansible Controller (Control Node)
+*  The **controller** (also known as the control node) is the **machine where Ansible is installed** and **from** which you **run your automation tasks**. 
+
+### Role of the Controller:
+* The controller is the central point from which you manage your infrastructure.
+* It runs the Ansible commands and playbooks, connecting to your managed nodes (servers, devices, etc.) over SSH.
+
+### Key Functions:
+* **Executing Playbooks**
+  * The controller reads and executes the playbooks you write, sending tasks to the managed nodes.
+
+* **Managing Inventory**
+  * The controller maintains an inventory of the nodes it manages. 
+  * This inventory can be a simple text file listing the nodes or a more dynamic source like a cloud provider’s API.
+
+* **Connecting to Nodes**
+  * The controller uses SSH to connect to the managed nodes. 
+  * This means you don’t need to install any special software on the nodes themselves.
+
+* **Running Modules**
+  * The controller sends small programs called modules to the nodes to perform specific tasks. 
+  * These modules are executed on the nodes, and the results are sent back to the controller.
 
 <br>
 
