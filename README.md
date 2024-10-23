@@ -7,6 +7,15 @@
     - [Key Benefits of IaC and CI/CD for Customers](#key-benefits-of-iac-and-cicd-for-customers)
   - [When/Where to Use IaC](#whenwhere-to-use-iac)
   - [What are the Tools Available for IaC?](#what-are-the-tools-available-for-iac)
+    - [Configuration management tools](#configuration-management-tools)
+    - [Why Are They Important?](#why-are-they-important)
+    - [How Do They Work?](#how-do-they-work)
+  - [Orchestration tools](#orchestration-tools)
+    - [Terraform](#terraform)
+    - [AWS CloudFormation](#aws-cloudformation)
+    - [Ansible](#ansible)
+    - [Why Use Orchestration Tools?](#why-use-orchestration-tools)
+    - [Declarative and Imperative](#declarative-and-imperative)
 - [What is Configuration Management (CM)?](#what-is-configuration-management-cm)
 - [What is Provisioning of Infrastructure? Do CM Tools Do It?](#what-is-provisioning-of-infrastructure-do-cm-tools-do-it)
 - [What is Ansible and How Does It Work?](#what-is-ansible-and-how-does-it-work)
@@ -90,6 +99,71 @@ Example Use Cases:
 * **Google Cloud Deployment Manager**: For Google Cloud Platform.
 * **Ansible**, **Chef**, **Puppet**: These tools also handle configuration management.
 
+### Configuration management tools
+* Helps **automate** the **management and tracking** of IT **infrastructure**, ensuring consistency and reliability across different environments.
+  * Ansible.
+  * Puppet. 
+  * Chef. 
+
+> Configuration management tools are like helpers that make sure all the parts of your IT setup (like servers, databases, and networks) are set up correctly and stay that way.
+
+| **Tool**      | **Description**                                                                 |
+|---------------|---------------------------------------------------------------------------------|
+| **Ansible**   | Known for its simplicity and ease of use, Ansible automates software provisioning, configuration management, and application deployment. |
+| **Chef**      | Focuses on configuration management and automation, using a Ruby-based DSL (domain-specific language) for writing configuration scripts. |
+| **Puppet**    | Provides configuration management and deployment automation, using a declarative language to define system configurations. |
+
+<br>
+
+### Why Are They Important?
+* **Automation**: They automate the process of setting up and managing your IT infrastructure, so you don’t have to do everything manually.
+* **Consistency**: They ensure that everything is set up the same way every time, which helps avoid mistakes.
+* **Reliability**: They keep track of changes and make sure everything works smoothly across different environments (like development, testing, and production).
+
+### How Do They Work?
+* **Define Configurations**: You write down how you want your infrastructure to be set up using a specific language or tool.
+* **Apply Configurations**: The tool takes your instructions and sets up the infrastructure accordingly.
+* **Manage Changes**: If you need to make changes, the tool helps you update the setup without breaking anything.
+
+<br>
+
+## Orchestration tools
+* Orchestration tools help you **manage** and **automate** the **setup and coordination** of your IT **infrastructure**. 
+  
+> Think of them as the conductors of an orchestra, making sure all the different parts (like servers, databases, and networks) work together smoothly.
+### Terraform
+* **Description**: Terraform is an open-source tool developed by HashiCorp. 
+  * It allows you to define and manage infrastructure across multiple cloud providers using a declarative configuration language (HCL - HashiCorp Configuration Language).
+* **Use Cases**: Ideal for multi-cloud environments, infrastructure provisioning, and managing resources like servers, databases, and networking.
+
+### AWS CloudFormation
+* **Description**: AWS CloudFormation is a service provided by Amazon Web Services (AWS) that helps you model and set up your AWS resources. 
+  * It uses templates to describe the resources and their dependencies so you can launch and configure them together as a stack.
+* **Use Cases**: Automating the setup of AWS resources, managing complex environments, and ensuring consistent deployments.
+
+### Ansible
+* **Description**: Ansible is primarily a configuration management tool but can also be used for orchestration.
+  * It uses a simple, human-readable language (YAML) to describe automation jobs, which can include provisioning, configuration management, and application deployment.
+* **Use Cases**: Automating repetitive tasks, orchestrating multi-tier deployments, and managing configurations across different environments.
+
+<br>
+
+### Why Use Orchestration Tools?
+* **Consistency**: Ensures that your infrastructure is set up the same way every time.
+* **Efficiency**: Saves time by automating repetitive tasks.
+* **Scalability**: Makes it easier to manage large and complex environments.
+
+<br>
+
+### Declarative and Imperative
+| **Type**               | **Description**                                                                 | **Examples**                                                                                     |
+|------------------------|---------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
+| **Declarative IaC Tools** | These tools specify the desired end state of the infrastructure, and the tool automatically configures it to match that state. | Terraform, AWS CloudFormation, Azure Resource Manager, Google Cloud Deployment Manager |
+| **Imperative IaC Tools**  | These tools specify the exact steps needed to achieve the desired configuration. | Ansible, Chef, Puppet, SaltStack                                                                 |
+
+
+<br>
+
 ![10-iac-tools](./iac-images/iac-tools.png)
 
 Source: https://cloudwithease.com/top-10-infrastructure-as-a-code-or-iac-tools/
@@ -104,7 +178,8 @@ Source: https://cloudwithease.com/top-10-infrastructure-as-a-code-or-iac-tools/
 
 # What is Provisioning of Infrastructure? Do CM Tools Do It?
 * Provisioning of infrastructure involves **setting up the necessary hardware** and **software** to **support applications**. 
-* This includes servers, storage, networking, and more. Some CM tools, like Ansible and Chef, can also handle provisioning by automating the setup of these resources.
+* This includes servers, storage, networking, and more. 
+  * Some CM tools, like Ansible and Chef, can also handle provisioning by automating the setup of these resources.
 
 <br>
 
