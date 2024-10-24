@@ -329,6 +329,7 @@ Source: https://cloudwithease.com/top-10-infrastructure-as-a-code-or-iac-tools/
 * In a push model, the controlling server **pushes configurations directly to the target machines**. 
 * This is usually done over a connection like **SSH** and **does not require an agent** running on the target machines. 
 * This method is more **direct** and is often used when you need to **apply changes immediately**.
+  * Terraform communicates using APIs, this is why it's a bit different to usual push configuration tools. 
 
 * Example: Ansible, Terraform, and AWS CloudFormation use this approach. 
   * The controlling system (like a laptop running Terraform) **pushes the infrastructure changes** to the target cloud providers or servers.
