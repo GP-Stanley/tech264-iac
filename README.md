@@ -20,7 +20,7 @@
 - [What is Provisioning of Infrastructure? Do CM Tools Do It?](#what-is-provisioning-of-infrastructure-do-cm-tools-do-it)
 - [What is Ansible and How Does It Work?](#what-is-ansible-and-how-does-it-work)
   - [How Does Ansible Work?](#how-does-ansible-work)
-  - [Key Features of Ansible:](#key-features-of-ansible)
+  - [Key Features of Ansible](#key-features-of-ansible)
     - [Example Use Cases:](#example-use-cases)
   - [Key Features of Ansible Playbooks](#key-features-of-ansible-playbooks)
       - [Declarative Syntax](#declarative-syntax)
@@ -32,6 +32,21 @@
     - [Role of the Controller:](#role-of-the-controller)
     - [Key Functions:](#key-functions)
 - [Who is Using IaC and Ansible in the Industry?](#who-is-using-iac-and-ansible-in-the-industry)
+- [Research](#research)
+  - [What is pull and push configuration management (IaC)?](#what-is-pull-and-push-configuration-management-iac)
+    - [Pull configuration management](#pull-configuration-management)
+    - [Push configuration management](#push-configuration-management)
+  - [Which tools support push/pull?](#which-tools-support-pushpull)
+    - [Pull-based tools](#pull-based-tools)
+    - [Push-based tools](#push-based-tools)
+  - [Does Terraform use the push or pull configuration?](#does-terraform-use-the-push-or-pull-configuration)
+  - [Which is better: push or pull configuration management?](#which-is-better-push-or-pull-configuration-management)
+    - [Push model](#push-model)
+    - [Pull model](#pull-model)
+- [Desired State vs Current State](#desired-state-vs-current-state)
+  - [Desired State](#desired-state)
+  - [Current State](#current-state)
+- [Conclusion](#conclusion)
 
 
 ![iac1](./iac-images/iac1.png)
@@ -220,7 +235,7 @@ Source: https://cloudwithease.com/top-10-infrastructure-as-a-code-or-iac-tools/
 
 <br>
 
-## Key Features of Ansible:
+## Key Features of Ansible
 * **Agentless**: Unlike some other tools, Ansible doesn’t require any agents to be installed on the nodes. 
   * It uses SSH for communication, which simplifies the setup and reduces overhead.
 * **Declarative Language**: Ansible uses a simple, human-readable language called YAML (Yet Another Markup Language) to define automation tasks. 
@@ -297,3 +312,82 @@ Source: https://cloudwithease.com/top-10-infrastructure-as-a-code-or-iac-tools/
 
 <br> 
 
+# Research
+
+## What is pull and push configuration management (IaC)?
+### Pull configuration management 
+* In a pull model, each target machine (like a server) **pulls** its **configuration from a central server or management system**. 
+* This happens periodically, where the machines use an **agent** to **check and update** their own configurations as needed. 
+* This method is common in continuous management where machines need to **stay up-to-date** with the latest policies and configurations.
+
+* Example: Puppet and Chef use this approach. 
+  * **Agents** installed on machines **reach out to a central server** to **fetch** their latest **configurations**.
+
+<br>
+
+### Push configuration management 
+* In a push model, the controlling server **pushes configurations directly to the target machines**. 
+* This is usually done over a connection like **SSH** and **does not require an agent** running on the target machines. 
+* This method is more **direct** and is often used when you need to **apply changes immediately**.
+
+* Example: Ansible, Terraform, and AWS CloudFormation use this approach. 
+  * The controlling system (like a laptop running Terraform) **pushes the infrastructure changes** to the target cloud providers or servers.
+
+<br>
+
+![alt text](../tech264-terraform/terraform-images/pull-push.png)
+
+<br>
+
+## Which tools support push/pull?
+### Pull-based tools
+* **Puppet and Chef**: Both use agents on machines that pull configurations periodically from a central server.
+
+### Push-based tools
+* **Ansible**: Pushes changes directly from the controlling machine to the targets over **SSH**.
+* **Terraform**: Pushes changes to cloud infrastructure via **API calls**, making it more declarative but push-based.
+* **AWS CloudFormation**: Also uses a push model when managing AWS infrastructure.
+
+<br>
+
+## Does Terraform use the push or pull configuration?
+* Terraform uses the **push** model. 
+* It **defines the desired state** of infrastructure in code and then **pushes the configuration** changes to cloud providers like AWS using their APIs. 
+* This means it **does not require an agent** on the target systems, but rather **directly interacts with APIs** to apply the changes​ PUPPETEERS.
+
+
+## Which is better: push or pull configuration management?
+There’s no definitive "better" model — it depends on the use case.
+
+<br>
+
+### Push model 
+* Is typically better for **provisioning infrastructure** and when you need **immediate application of changes**. 
+* Tools like Terraform or Ansible excel in this for cloud infrastructure or one-time setups.
+
+### Pull model 
+* Is often better for **continuous configuration management**, where systems need to **regularly check in** and **stay updated** with the latest configurations. 
+* Tools like Puppet and Chef are ideal for this.
+
+> If you need ongoing, regular configuration updates, **pull** tools might be a better fit.
+> 
+> If you need to set up infrastructure or apply changes instantly, **push** tools are often more efficient​. 
+
+<br>
+
+# Desired State vs Current State
+## Desired State
+* In IaC, the desired state refers to the **configuration or infrastructure that is defined in code**. 
+* This is how you want the infrastructure to look after all changes are applied. 
+  * For example, in Terraform, the desired state is defined in the .tf files (e.g., how many VMs you want, what networks they belong to, etc.).
+
+## Current State
+* This refers to the actual state of the infrastructure at any given time. 
+  * For example, if you’ve defined 3 virtual machines in your desired state but only 2 exist in reality, there is a difference between the desired and current states.
+
+Tools like Terraform use a state file (terraform.tfstate) to track the current state of the infrastructure. When you run terraform apply, it compares the current state (tracked in the state file) to the desired state (defined in code) and applies changes to align the two​.
+
+# Conclusion
+* Push-based models (like Terraform and Ansible) are well-suited for provisioning and immediate changes.
+* Pull-based models (like Puppet and Chef) are ideal for environments needing continuous configuration management and synchronization.
+* Both push and pull models have their use cases, and the choice depends on the specific infrastructure management needs.
