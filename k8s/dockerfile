@@ -1,0 +1,30 @@
+# the base image for the build stage
+FROM maven:3.8.5-openjdk-17-slim AS build
+
+# sets the working directory inside the container to /app
+WORKDIR /app
+
+# copies the pom.xml file to the /app directory in the container
+COPY pom.xml .
+
+# copies the src directory to the /app/src directory in the container
+COPY src ./src
+
+# command to clean and package the application, skipping the tests
+RUN mvn clean package -DskipTests
+
+# base image for the runtime stage
+FROM openjdk:17-slim
+
+# sets the working directory inside the container to /app
+WORKDIR /app
+
+# copies from build stage to runtime stage
+COPY --from=build /app/target/*.jar library-app.jar
+
+# the port your application will run on
+EXPOSE 5000
+
+# command to run when the container starts
+ENTRYPOINT ["java", "-jar", "/app/library-app.jar"]
+
