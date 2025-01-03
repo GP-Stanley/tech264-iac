@@ -1,0 +1,94 @@
+---
+# Sparta app deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-sparta-app-deployment
+spec:
+  selector:
+    matchLabels:
+      app: spring-sparta-app
+
+  # Create replicaset
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spring-sparta-app
+    spec:
+      initContainers:
+      - name: wait-for-db
+        image: busybox
+        command:
+          - sh
+          - -c
+          - >
+            until nc -z java-app-db-svc 3306; do
+              echo "Waiting for database...";
+              sleep 5;
+            done;
+      containers:
+      - name: spring-sparta-app
+        image: shonifari8/java-app:v1
+        imagePullPolicy: Always  # Explicitly set to always pull
+        ports:
+        - containerPort: 5000
+        env:
+        - name: DB_HOST
+          value: jdbc:mysql://java-app-db-svc:3306/library
+        - name: DB_USER
+          value: root
+        - name: DB_PASS
+          value: password
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+            ephemeral-storage: "1Gi" # Request 1Gi of ephemeral storage
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+            ephemeral-storage: "2Gi" # Limit to 2Gi of ephemeral storage
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-sparta-app-service
+  namespace: default
+spec:
+  ports:
+  - nodePort: 30001
+    port: 5000
+    targetPort: 5000
+  selector:
+    app: spring-sparta-app
+  type: NodePort
+
+---
+# ConfigMap for initial SQL script
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: library-sql-configmap
+data:
+  library.sql: |
+    DROP DATABASE IF EXISTS library;
+    CREATE DATABASE library;
+    USE library;
+
+    CREATE TABLE authors (
+    author_id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    full_name VARCHAR(40)
+    );
+    CREATE TABLE books (
+    book_id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    title VARCHAR(100),
+    author_id int,
+    FOREIGN KEY (author_id) REFERENCES authors(author_id)
+    );
+
+    INSERT INTO library.authors (full_name) VALUES ('Phil');
+    INSERT INTO library.authors (full_name) VALUES ('William Shakespeare');
+    INSERT INTO library.authors (full_name) VALUES ('Jane Austen');
+    INSERT INTO library.authors (full_name) VALUES ('Charles Dickens');

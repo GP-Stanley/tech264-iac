@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  database:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: library
+      MYSQL_ROOT_PASSWORD: Stok3s:12!
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./library.sql:/docker-entrypoint-initdb.d/library.sql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  application:
+    container_name: libraryproject2-app-1
+    image: gina98/library-test-app:v2
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      - DB_HOST=jdbc:mysql://database:3306/library
+      - DB_USER=root
+      - DB_PASS=Stok3s:12!
+    ports:
+      - "5000:5000"
+
+volumes:
+  mysql-data:

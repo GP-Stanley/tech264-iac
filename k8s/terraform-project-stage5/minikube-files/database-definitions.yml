@@ -1,0 +1,91 @@
+---
+# database pvc
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app-db-pvc
+  labels:
+    type: local
+spec:
+  volumeName: app-db-pv
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Mi
+
+---
+# database pv
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: app-db-pv
+  labels:
+    type: local
+spec:
+  claimRef:
+    namespace: default
+    name: app-db-pvc
+  storageClassName: manual
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /var/lib/mysql
+
+---
+# database deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+spec:
+  selector:
+    matchLabels:
+      app: java-app-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: java-app-db
+    spec:
+      containers:
+      - name: java-app-db
+        image: mysql:8.0
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: password
+          - name: MYSQL_DATABASE
+            value: library
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+          - name: db-storage
+            mountPath: /var/lib/mysql
+          - name: init-script
+            mountPath: /docker-entrypoint-initdb.d/library.sql
+            subPath: library.sql
+      volumes:
+      - name: db-storage
+        persistentVolumeClaim:
+          claimName: app-db-pvc
+      - name: init-script
+        configMap:
+          name: library-sql-configmap
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-app-db-svc
+  namespace: default
+spec:
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
+  selector:
+    app: java-app-db
+  type: ClusterIP
